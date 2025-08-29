@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_telecentro
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ott_db
+    ports:
+      - "3306:3306"
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo_telecentro
+    restart: always
+    ports:
+      - "27017:27017"
+
+  backend:
+    image: node:18
+    container_name: backend_ott
+    working_dir: /app
+    volumes:
+      - ./backend_api:/app
+    command: sh -c "npm install && npm start"
+    ports:
+      - "3000:3000"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./grafana/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3001:3000"
+
+  kibana:
+    image: kibana:8.10.0
+    container_name: kibana
+    ports:
+      - "5601:5601"
+
+  zabbix:
+    image: zabbix/zabbix-appliance:latest
+    container_name: zabbix
+    ports:
+      - "8080:80"
