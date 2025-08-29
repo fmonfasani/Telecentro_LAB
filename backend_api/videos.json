@@ -1,0 +1,5 @@
+[
+  { "id": 1, "title": "Película A", "drm": "Widevine", "status": "OK" },
+  { "id": 2, "title": "Serie B", "drm": "FairPlay", "status": "OK" },
+  { "id": 3, "title": "Documental C", "drm": "PlayReady", "status": "ERROR_DRM" }
+]
